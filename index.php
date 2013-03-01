@@ -45,7 +45,7 @@ if (!empty($_GET))
       }
     }
   // Yay! It works! Go there then!
-  if (!empty($page) && strpos($page, 'google') !== FALSE)
+  if (!empty($page) && strpos($page, 'google') === FALSE)
     header ('Location: ' . $page);
   
   // When there's no url after trying to get it 'so hard' or the url is google
