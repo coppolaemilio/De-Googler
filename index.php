@@ -57,5 +57,4 @@ if (!empty($_GET))
     $not_found = TRUE;
   }
 // The main page
-else
-  include dirname(__FILE__) . '/main.php';
+include dirname(__FILE__) . '/main.php';
