@@ -5,7 +5,7 @@ include dirname(__FILE__) . '/pfopen.php';
 if (!empty($_GET))
   {
   // Attempt to open normally the page
-  if (fopen('http://google.com/search?q=' . $_POST['q'] . '&btnI', 'r'))
+  if (fopen('http://google.com/search?q=' . $_GET['q'] . '&btnI', 'r'))
     {
     $details = stream_get_meta_data($fh);
     
@@ -36,7 +36,7 @@ if (!empty($_GET))
     $i = 0;
     // Attempt to open google as long as there are proxies available
     while(!empty($proxy[$i]['url']) &&
-          !($fh = pfopen('http://google.com/search?q=' . $_POST['q'] . '&btnI',
+          !($fh = pfopen('http://google.com/search?q=' . $_GET['q'] . '&btnI',
                          $proxy[$i]['url'],
                          $proxy[$i]['port'])))
       {
