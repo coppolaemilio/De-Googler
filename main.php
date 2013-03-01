@@ -1,45 +1,3 @@
-<?php
-$proxy = array(array('url' => '', 'port' => '80'),
-                      array('url' => '', 'port' => '80')
-                      );
-
-function pfopen($_url, $_proxy_name = null, $_proxy_port = 4480) { 
-  if(is_null($_proxy_name) || LOCAL_TEST){ 
-    return fopen($_url); 
-  }else{ 
-    $proxy_fp = fsockopen($_proxy_name, $_proxy_port); 
-    if (!$proxy_fp) return false; 
-    $host= substr($_url, 7); 
-    $host = substr($bucket, 0, strpos($host, "/")); 
-
-    $request = "GET $_url HTTP/1.0\r\nHost:$host\r\n\r\n"; 
-
-    fputs($proxy_fp, $request); 
-
-    return $proxy_fp; 
-  } 
-} 
-
-if (!empty($_GET))
-  {
-  $i = 0;
-  while(!empty($proxy[$i]['url']) && !($fh = pfopen('http://google.com/search?q=' . $_POST['q'] . '&btnI', 'r', $proxy[$i]['url'], $proxy[$i]['port'])))
-    {
-    $details = stream_get_meta_data($fh);
-  
-    foreach ($details['wrapper_data'] as $line)
-      if (is_string($line) && preg_match('/^Location: (.*?)$/i', $line, $m))
-        $page =  $m[1];
-    }
-  if (!empty($page))
-    header ('Location: ' . $page);
-  else
-    echo "Sorry, google is not available right now.";
-  }
-else
-  {
-  ?>
-
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -77,4 +35,3 @@ else
 
 </body>
 </html>
-<?php } ?>
