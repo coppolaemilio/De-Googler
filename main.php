@@ -21,7 +21,7 @@
 
   <div role="main">
     
-    <?php if ($not_found) echo "Couldn't retrieve the page you were looking for. Please try again."; ?>
+    <?php if ($not_found == TRUE) echo "Couldn't retrieve the page you were looking for. Please try again."; ?>
     
     <form class="form-inline input-append" method = "GET" action = "" accept-charset="UTF-8">
       <input name = "q" value = "<?php if ($_GET['q']) echo $_GET['q']; ?>" placeholder="I'm Feeling Lucky">
