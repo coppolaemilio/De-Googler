@@ -20,19 +20,34 @@ if (!empty($_GET))
       // Each element of proxy is an array, the first one being 'url' and the second one being 'port'
       $proxy[] = $inter;
       }
-    
-  $i = 0;
-  // Attempt to open google as long as there are proxies available
-  while(!empty($proxy[$i]['url']) &&
-        !($fh = pfopen('http://google.com/search?q=' . $_POST['q'] . '&btnI',
-                       $proxy[$i]['url'],
-                       $proxy[$i]['port'])))
+  
+  // Attempt to open normally the page
+  if (fopen('http://google.com/search?q=' . $_POST['q'] . '&btnI', 'r'))
     {
     $details = stream_get_meta_data($fh);
     
     foreach ($details['wrapper_data'] as $line)
       if (is_string($line) && preg_match('/^Location: (.*?)$/i', $line, $m))
         $page =  $m[1];
+    }
+  
+  // You don't like it? Take the proxies then, google.
+  if (empty($page))
+    {
+    $i = 0;
+    // Attempt to open google as long as there are proxies available
+    while(!empty($proxy[$i]['url']) &&
+          !($fh = pfopen('http://google.com/search?q=' . $_POST['q'] . '&btnI',
+                         $proxy[$i]['url'],
+                         $proxy[$i]['port'])))
+      {
+      // This is a bit repeat-yourself-ish...
+      $details = stream_get_meta_data($fh);
+      
+      foreach ($details['wrapper_data'] as $line)
+        if (is_string($line) && preg_match('/^Location: (.*?)$/i', $line, $m))
+          $page =  $m[1];
+      }
     }
   // Yay! It works! Go there then!
   if (!empty($page))
