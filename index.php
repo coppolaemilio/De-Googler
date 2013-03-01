@@ -1,6 +1,17 @@
 <?php
 include dirname(__FILE__) . '/pfopen.php';
 
+if ($fp = fopen (dirname(__FILE__) . '/proxies', 'r'))
+  while ($line = fgets ($fp))
+    {
+    $p = explode(' ', $line);
+    $inter['url'] = $p[0];
+    if (!empty($p[1]))
+      $inter['port'] = $p[1];
+
+    $proxy[] = $inter;
+    }
+
 if (!empty($_GET))
   {
   $i = 0;
