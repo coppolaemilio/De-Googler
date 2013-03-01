@@ -24,7 +24,7 @@
     <?php if ($not_found) echo "Couldn't retrieve the page you were looking for. Please try again."; ?>
     
     <form class="form-inline input-append" method = "GET" action = "" accept-charset="UTF-8">
-      <input placeholder="I'm Feeling Lucky" name = "q">
+      <input name = "q" value = "<?php if ($_GET['q']) echo $_GET['q']; ?>" placeholder="I'm Feeling Lucky">
       <input type = "submit" value = "Search">
     </form>
   </div>
