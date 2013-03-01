@@ -1,3 +1,4 @@
+<?php
 function pfopen($_url, $_proxy_name = null, $_proxy_port = 4480)
   {
   // To avoid errors but still return something
