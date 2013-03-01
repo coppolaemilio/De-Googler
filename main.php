@@ -20,7 +20,9 @@
   </header>
 
   <div role="main">
-
+    
+    <?php if ($not_found) echo "Couldn't retrieve the page you were looking for. Please try again."; ?>
+    
     <form class="form-inline input-append" method = "GET" action = "" accept-charset="UTF-8">
       <input placeholder="I'm Feeling Lucky" name = "q">
       <input type = "submit" value = "Search">
