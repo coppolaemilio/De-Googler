@@ -40,7 +40,7 @@ if (!empty($_GET))
   
   // When there's no url after trying to get it 'so hard'
   else
-    include dirname(__FILE__) . '/empty.php';
+    $not_found = TRUE;
   }
 // The main page
 else
