@@ -4,23 +4,6 @@ include dirname(__FILE__) . '/pfopen.php';
 // When the user tries to access a page.
 if (!empty($_GET))
   {
-  // Retrieve all the proxies in the array $proxy
-  if ($fp = fopen (dirname(__FILE__) . '/proxies', 'r'))
-    // While there are proxies
-    while ($line = fgets ($fp))
-      {
-      // Separates each line in it's proxy and port for that proxy and saves it in an array
-      $p = explode(' ', $line);
-      
-      // We need this auxiliar array or $proxy won't be an array of arrays.
-      $aux['url'] = $p[0];
-      if (!empty($p[1]))
-        $aux['port'] = $p[1];
-
-      // Each element of proxy is an array, the first one being 'url' and the second one being 'port'
-      $proxy[] = $inter;
-      }
-  
   // Attempt to open normally the page
   if (fopen('http://google.com/search?q=' . $_POST['q'] . '&btnI', 'r'))
     {
@@ -31,9 +14,25 @@ if (!empty($_GET))
         $page =  $m[1];
     }
   
-  // You don't like it? Take the proxies then, google.
+  // You don't like it? Take the proxies then, google!
   if (empty($page))
     {
+    // Retrieve all the proxies in the array $proxy
+    if ($fp = fopen (dirname(__FILE__) . '/proxies', 'r'))
+      // While there are proxies
+      while ($line = fgets ($fp))
+        {
+        // Separates each line in it's proxy and port for that proxy and saves it in an array
+       $p = explode(' ', $line);
+        
+        // We need this auxiliar array or $proxy won't be an array of arrays.
+        $aux['url'] = $p[0];
+        if (!empty($p[1]))
+          $aux['port'] = $p[1];
+
+        // Each element of proxy is an array, the first one being 'url' and the second one being 'port'
+        $proxy[] = $inter;
+        }
     $i = 0;
     // Attempt to open google as long as there are proxies available
     while(!empty($proxy[$i]['url']) &&
