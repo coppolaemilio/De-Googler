@@ -1,6 +1,6 @@
 <?php
 // Variables
-$proxiename = 'proxies';
+$proxiefile = 'proxies';
 if (!empty($_GET))
   $googleurl = 'http://google.com/search?q=' . $_GET['q'] . '&btnI';
 
@@ -17,7 +17,7 @@ if (!empty($_GET))
     $page = retrieve ($fh);
   
   // You don't like it? Take the proxies then, google!
-  if (empty($page) && $fp = fopen (dirname(__FILE__) . '/' . $proxiename, 'r'))
+  if (empty($page) && $fp = fopen (dirname(__FILE__) . '/' . $proxiefile, 'r'))
     {
     // Each proxy is stored in a line
     while ($line = fgets ($fp))
