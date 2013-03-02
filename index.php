@@ -1,6 +1,10 @@
 <?php
-include dirname(__FILE__) . '/pfopen.php';
 $proxiename = 'proxies';
+
+foreach (array('pfopen', 'retrieve') as $ToRequire)
+  if (file_exists(dirname(__FILE__) . '/' . $ToRequire . '.php'))
+    require dirname(__FILE__) . '/' . $ToRequire . '.php';
+
 // When the user tries to access a page.
 if (!empty($_GET))
   {
@@ -29,28 +33,29 @@ if (!empty($_GET))
         $proxy[] = $inter;
         }
     
-    $i = 0;
     // Attempt to open google as long as there are proxies available
-    while(!empty($proxy[$i]['url']) &&
-          !($fh = pfopen('http://google.com/search?q=' . $_GET['q'] . '&btnI',
+    foreach ($proxy as $aproxy)
+      {
+      if ($fh = pfopen('http://google.com/search?q=' . $_GET['q'] . '&btnI',
                          $proxy[$i]['url'],
-                         $proxy[$i]['port'])))
+                         $proxy[$i]['port']))
+      
+      }
+    
+    while(!empty($proxy[$i]['url']) &&
+          !())
       {
       // This is a bit repeat-yourself-ish...
       $details = stream_get_meta_data($fh);
       
       foreach ($details['wrapper_data'] as $line)
         if (is_string($line) && preg_match('/^Location: (.*?)$/i', $line, $m))
-          $page =  $m[1];
+          $page = retrieve ()
       }
     }
   // Yay! It works! Go there then!
-  if (!empty($page) && strpos($page, 'google') === FALSE)
+  if (!empty($page))
     header ('Location: ' . $page);
-  
-  // When there's no url after trying to get it 'so hard' or the url is google
-  else
-    $not_found = TRUE;
   }
 // The main page
 include dirname(__FILE__) . '/main.php';
