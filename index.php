@@ -39,21 +39,12 @@ if (!empty($_GET))
       if ($fh = pfopen($googleurl, $aproxy['url'], $aproxy['port']) && $page = retrieve ($fh))
         // Get out of the foreach loop
         break;
-    
-    while(!empty($proxy[$i]['url']) &&
-          !())
-      {
-      // This is a bit repeat-yourself-ish...
-      $details = stream_get_meta_data($fh);
-      
-      foreach ($details['wrapper_data'] as $line)
-        if (is_string($line) && preg_match('/^Location: (.*?)$/i', $line, $m))
-          $page = retrieve ()
-      }
     }
+  
   // Yay! It works! Go there then!
   if (!empty($page))
     header ('Location: ' . $page);
   }
+
 // The main page
 include dirname(__FILE__) . '/main.php';
