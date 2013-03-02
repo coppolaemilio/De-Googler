@@ -1,5 +1,7 @@
 <?php
 $proxiename = 'proxies';
+if (!empty($_GET))
+  $googleurl = 'http://google.com/search?q=' . $_GET['q'] . '&btnI';
 
 foreach (array('pfopen', 'retrieve') as $ToRequire)
   if (file_exists(dirname(__FILE__) . '/' . $ToRequire . '.php'))
@@ -9,11 +11,9 @@ foreach (array('pfopen', 'retrieve') as $ToRequire)
 if (!empty($_GET))
   {
   // Attempt to open normally the page
-  if ($fh = fopen('http://google.com/search?q=' . $_GET['q'] . '&btnI', 'r'))
-    {
-    $details = stream_get_meta_data($fh);
-    $page = $details['uri'];
-    }
+  if ($fh = fopen($googleurl, 'r'))
+    $page = retrieve ($fh);
+  
   // You don't like it? Take the proxies then, google!
   if (empty($page))
     {
